@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Literacy | Teacher Operations Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #F1F5F9; color: #334155; }
+        
+        /* Traffic Light Glows */
+        .glow-red { box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
+        .glow-amber { box-shadow: 0 0 15px rgba(245, 158, 11, 0.4); }
+        .glow-green { box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
+
+        .nav-link.active { border-left: 4px solid #4F46E5; background-color: #fff; color: #1E293B; font-weight: 600; }
+        .nav-link { border-left: 4px solid transparent; transition: all 0.2s; }
+        .nav-link:hover { background-color: #E2E8F0; }
+    </style>
+</head>
+<body class="h-screen flex overflow-hidden">
+
+    <aside class="w-64 bg-slate-100 border-r border-slate-200 flex flex-col hidden md:flex">
+        <div class="h-16 flex items-center px-6 border-b border-slate-200 bg-white">
+            <span class="text-lg font-bold text-slate-800">Teacher<span class="text-indigo-600">Hub</span></span>
+        </div>
+        <nav class="flex-grow py-6 space-y-1">
+            <button onclick="setTab('competency')" id="nav-competency" class="nav-link active w-full text-left px-6 py-3 text-sm text-slate-600">
+                Competency Framework
+            </button>
+            <button onclick="setTab('traffic')" id="nav-traffic" class="nav-link w-full text-left px-6 py-3 text-sm text-slate-600">
+                Traffic Light Protocol
+            </button>
+            <button onclick="setTab('staff')" id="nav-staff" class="nav-link w-full text-left px-6 py-3 text-sm text-slate-600">
+                Staff Room & Policy
+            </button>
+        </nav>
+        <div class="p-4 border-t border-slate-200">
+            <div class="text-xs text-slate-400">v2.4 - Academic Year 2024/25</div>
+        </div>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto relative">
+        <div class="md:hidden h-16 bg-white border-b flex items-center px-4 justify-between sticky top-0 z-20">
+            <span class="font-bold">TeacherHub</span>
+            <select onchange="setTab(this.value)" class="bg-slate-50 border rounded text-sm p-1">
+                <option value="competency">Competencies</option>
+                <option value="traffic">Traffic Lights</option>
+                <option value="staff">Staff Room</option>
+            </select>
+        </div>
+
+        <div class="p-8 max-w-5xl mx-auto">
+            
+            <section id="tab-competency" class="space-y-6">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h1 class="text-2xl font-bold text-slate-900">Competency Framework</h1>
+                        <p class="text-slate-500">What students should know and do.</p>
+                    </div>
+                    <div class="bg-white rounded-lg border border-slate-200 p-1 flex">
+                        <button class="px-3 py-1 bg-indigo-100 text-indigo-700 rounded text-xs font-bold">Primary</button>
+                        <button class="px-3 py-1 text-slate-500 rounded text-xs font-bold hover:bg-slate-50">Secondary</button>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="bg-white rounded-lg shadow-sm border-t-4 border-blue-500 p-6">
+                        <h3 class="font-bold text-blue-700 mb-4">Conceptual</h3>
+                        <ul class="space-y-3 text-sm text-slate-600">
+                            <li class="flex gap-2"><span class="text-blue-500">✓</span> Defines AI vs Non-AI</li>
+                            <li class="flex gap-2"><span class="text-blue-500">✓</span> Understands Datasets</li>
+                            <li class="flex gap-2"><span class="text-blue-500">✓</span> Recognizes Sensors</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-sm border-t-4 border-rose-500 p-6">
+                        <h3 class="font-bold text-rose-700 mb-4">Critical</h3>
+                        <ul class="space-y-3 text-sm text-slate-600">
+                            <li class="flex gap-2"><span class="text-rose-500">✓</span> Identifies Bias</li>
+                            <li class="flex gap-2"><span class="text-rose-500">✓</span> Checks Facts</li>
+                            <li class="flex gap-2"><span class="text-rose-500">✓</span> Discusses Ethics</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-sm border-t-4 border-amber-500 p-6">
+                        <h3 class="font-bold text-amber-700 mb-4">Creative</h3>
+                        <ul class="space-y-3 text-sm text-slate-600">
+                            <li class="flex gap-2"><span class="text-amber-500">✓</span> Prompts Effectively</li>
+                            <li class="flex gap-2"><span class="text-amber-500">✓</span> Collaborates with AI</li>
+                            <li class="flex gap-2"><span class="text-amber-500">✓</span> Iterates Designs</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tab-traffic" class="hidden space-y-8">
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-900">Traffic Light Protocol</h1>
+                    <p class="text-slate-500">Standardized classroom permissions for AI use.</p>
+                </div>
+
+                <div class="bg-slate-900 rounded-2xl p-8 text-center text-white relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-red-500 via-amber-500 to-green-500"></div>
+                    
+                    <h2 class="text-xl font-medium opacity-80 mb-6">Select a Classroom Activity</h2>
+                    
+                    <div class="flex justify-center gap-4 flex-wrap mb-8">
+                        <button onclick="activateLight('red', 'Exams & Assessment')" class="px-4 py-2 bg-slate-800 rounded hover:bg-red-900/50 border border-slate-700 transition">Exams</button>
+                        <button onclick="activateLight('amber', 'Ideation & Drafting')" class="px-4 py-2 bg-slate-800 rounded hover:bg-amber-900/50 border border-slate-700 transition">Brainstorming</button>
+                        <button onclick="activateLight('green', 'Coding Support')" class="px-4 py-2 bg-slate-800 rounded hover:bg-green-900/50 border border-slate-700 transition">Debugging Code</button>
+                    </div>
+
+                    <div id="light-display" class="bg-slate-800 rounded-xl p-6 max-w-md mx-auto border border-slate-700 transition-all duration-500">
+                        <div class="flex justify-center gap-6 mb-4">
+                            <div id="bulb-red" class="w-12 h-12 rounded-full bg-red-900 border-4 border-slate-600 transition-all duration-300"></div>
+                            <div id="bulb-amber" class="w-12 h-12 rounded-full bg-amber-900 border-4 border-slate-600 transition-all duration-300"></div>
+                            <div id="bulb-green" class="w-12 h-12 rounded-full bg-green-900 border-4 border-slate-600 transition-all duration-300"></div>
+                        </div>
+                        <h3 id="rule-title" class="text-2xl font-bold mb-2">Select an Activity</h3>
+                        <p id="rule-desc" class="text-slate-400">Click a button above to see the rule.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section id="tab-staff" class="hidden space-y-8">
+                <div>
+                    <h1 class="text-2xl font-bold text-slate-900">Staff Room</h1>
+                    <p class="text-slate-500">Policy alignment and curriculum balance.</p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-800 mb-4">The 80/20 Rule</h3>
+                        <div class="h-64">
+                            <canvas id="balanceChart"></canvas>
+                        </div>
+                        <p class="text-xs text-center text-slate-500 mt-4">We assess 80% Human Skills, 20% AI usage.</p>
+                    </div>
+                    
+                    <div class="bg-white p-6 rounded-xl border border-slate-200 shadow-sm">
+                        <h3 class="font-bold text-slate-800 mb-4">Deployment Checklist</h3>
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-3">
+                                <input type="checkbox" checked class="mt-1 w-4 h-4 text-indigo-600 rounded">
+                                <span class="text-sm text-slate-600 line-through decoration-slate-400">GDPR compliance check for new tools.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 text-indigo-600 rounded">
+                                <span class="text-sm text-slate-600">Send "opt-out" letter to parents (Y7-Y9).</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <input type="checkbox" class="mt-1 w-4 h-4 text-indigo-600 rounded">
+                                <span class="text-sm text-slate-600">Update firewall for Generative AI domains.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <script>
+        // --- TABS ---
+        function setTab(tabId) {
+            // Hide all sections
+            ['tab-competency', 'tab-traffic', 'tab-staff'].forEach(id => {
+                document.getElementById(id).classList.add('hidden');
+            });
+            // Show active
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            // Update Sidebar nav
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            const navBtn = document.getElementById(`nav-${tabId}`);
+            if(navBtn) navBtn.classList.add('active');
+
+            // Init charts if needed
+            if(tabId === 'staff') renderStaffChart();
+        }
+
+        // --- TRAFFIC LIGHT LOGIC ---
+        function activateLight(color, activityName) {
+            // Reset Bulbs
+            document.getElementById('bulb-red').className = "w-12 h-12 rounded-full bg-red-900 border-4 border-slate-600 opacity-50";
+            document.getElementById('bulb-amber').className = "w-12 h-12 rounded-full bg-amber-900 border-4 border-slate-600 opacity-50";
+            document.getElementById('bulb-green').className = "w-12 h-12 rounded-full bg-green-900 border-4 border-slate-600 opacity-50";
+            
+            // Text Map
+            const texts = {
+                red: { title: "NO AI ALLOWED", desc: "This task assesses your raw human knowledge/skill." },
+                amber: { title: "AI AS CO-PILOT", desc: "You may use AI to brainstorm or outline, but you must write the final draft." },
+                green: { title: "AI ENCOURAGED", desc: "Use AI freely to solve this problem. You will be graded on your prompting and editing." }
+            };
+
+            // Activate Specific Bulb
+            const bulb = document.getElementById(`bulb-${color}`);
+            bulb.classList.remove('opacity-50', 'bg-red-900', 'bg-amber-900', 'bg-green-900');
+            
+            if(color === 'red') bulb.classList.add('bg-red-500', 'glow-red');
+            if(color === 'amber') bulb.classList.add('bg-amber-500', 'glow-amber');
+            if(color === 'green') bulb.classList.add('bg-green-500', 'glow-green');
+
+            // Update Text
+            document.getElementById('rule-title').innerText = `${activityName}: ${texts[color].title}`;
+            document.getElementById('rule-title').className = `text-2xl font-bold mb-2 text-${color}-400`;
+            document.getElementById('rule-desc').innerText = texts[color].desc;
+        }
+
+        // --- STAFF CHART ---
+        let chartInstance = null;
+        function renderStaffChart() {
+            if (chartInstance) return;
+            const ctx = document.getElementById('balanceChart').getContext('2d');
+            chartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Human Skills (Logic, Empathy)', 'AI Amplification'],
+                    datasets: [{\n                        data: [80, 20],
+                        backgroundColor: ['#3B82F6', '#10B981'],
+                        borderWidth: 0,
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, cutout: '75%' }
+            });
+        }
+    </script>
+</body>
+</html>
